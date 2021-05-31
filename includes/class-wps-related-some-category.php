@@ -157,6 +157,11 @@ class Wps_Related_Some_Category {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+        /**
+         * Add setting plugins
+         */
+		$plugin_admin->showRelatedProductSetting();
+
 	}
 
 	/**

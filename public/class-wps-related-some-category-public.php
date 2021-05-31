@@ -129,24 +129,23 @@ class Wps_Related_Some_Category_Public
 
         }
 
-        echo '<section class="related products 123"><div class="slick-related-some-category">';
+        echo '<section class="related products"><div class="slick-wps-related-some-category">';
 
         foreach($allProduct as $productSomeCategory){
-           echo '<div><a href="'.$productSomeCategory->post_name.'">'.get_the_post_thumbnail($productSomeCategory->ID, 'medium').'</a></div>';
+            echo '
+            <div class="has-post-thumbnail product type-product">
+                <div class="lte-item">
+                    <div class="lte-image">
+                    <a href="'.$productSomeCategory->post_name.'" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+                    '.get_the_post_thumbnail($productSomeCategory->ID, 'medium').'<span class="lte-wc-dots-wrapper"></span>
+                    </a>
+                    </div>
+                </div>
+            </div>';
         }
 
         echo '</div></section>';
 
-        echo '
-        <script>
-        jQuery(".slick-related-some-category").slick({
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          autoplay: true,
-          autoplaySpeed: 2000,
-        });
-        </script>
-        ';
     }
 
 }

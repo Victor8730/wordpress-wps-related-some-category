@@ -76,4 +76,75 @@ class Wps_Related_Some_Category_Admin {
 
 	}
 
+    /**
+     * Register page setting
+     */
+    public function add_plugin_page_wps_related_some_category(){
+        add_options_page( 'Setting plugins WPS Related Some Category', 'WPS Related Some Category', 'manage_options', 'wps_related_some_category', [ $this, 'wps_related_some_category_options_page_output' ]);
+    }
+
+    public function wps_related_some_category_options_page_output(){
+            ?>
+            <div class="wrap">
+                <h2><?php echo get_admin_page_title() ?></h2>
+                <form action="options.php" method="POST">
+                    <?php
+                    settings_fields( 'option_group' );
+                    do_settings_sections( 'wps_related_some_category' );
+                    submit_button();
+                    ?>
+                </form>
+            </div>
+            <?php
+        }
+
+    public function plugin_settings(){
+        register_setting( 'option_group', 'option_name', [ $this, 'sanitize_callback' ] );
+        add_settings_section( 'section_id', 'Display settings', '', 'wps_related_some_category');
+        add_settings_field('primer_field1', 'Number of products displayed', [ $this, 'fill_primer_field1' ], 'wps_related_some_category', 'section_id' );
+        add_settings_field('primer_field2', 'Slider auto start', [ $this, 'fill_primer_field2' ], 'wps_related_some_category', 'section_id' );
+    }
+
+
+    public function fill_primer_field1(){
+        $val = get_option('option_name');
+        $val = $val ? $val['input'] : null;
+        ?>
+        <input type="text" name="option_name[input]" value="<?php echo esc_attr( $val ) ?>" />
+        <?php
+    }
+
+
+    public function fill_primer_field2(){
+        $val = get_option('option_name');
+        $val = $val ? $val['checkbox'] : null;
+        ?>
+        <label><input type="checkbox" name="option_name[checkbox]" value="1" <?php checked( 1, $val ) ?> /> отметить</label>
+        <?php
+    }
+
+    function sanitize_callback( $options ){
+
+        foreach( $options as $name => & $val ){
+            if( $name == 'input' )
+                $val = strip_tags( $val );
+
+            if( $name == 'checkbox' )
+                $val = intval( $val );
+        }
+
+        return $options;
+    }
+
+    public function showRelatedProductSetting(){
+        /**
+         * Register the settings
+         */
+        add_action('admin_init', [ $this, 'plugin_settings' ]);
+
+        /**
+         * Create a plugin settings page
+         */
+        add_action('admin_menu', [ $this, 'add_plugin_page_wps_related_some_category' ]);
+    }
 }

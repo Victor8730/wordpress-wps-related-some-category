@@ -29,6 +29,13 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-
+	$(document).ready(function(){
+		$(".slick-wps-related-some-category").slick({
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			autoplay: true,
+			autoplaySpeed: 2000,
+		});
+	});
 
 })( jQuery );
